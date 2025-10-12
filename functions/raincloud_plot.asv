@@ -1,0 +1,39 @@
+function raincloud_plot(data)
+
+% Remove NaN values from data
+data = data(~any(isnan(data), 2), :);  % Remove rows with any NaN values
+
+% Number of variables (columns in the data matrix)
+num_vars = size(data, 2);
+
+% Set up the figure for three plots
+figure;
+hold on;
+
+% Set colors for the raincloud plot (adjust to your preference)
+cloud_colors = [0.2, 0.6, 0.8];  % Example light blue for the clouds
+
+for i = 1:num_vars
+    % Get the current variable data (without NaNs)
+    current_data = data(:, i);
+    
+    % Create a violin plot (density plot) on the left side
+    [f, xi] = ksdensity(current_data, 'Bandwidth', 0.5);
+    fill([-f, fliplr(-f)] + i, [xi, fliplr(xi)], cloud_colors, 'FaceAlpha', 0.5, 'EdgeColor', 'none');
+    hold on
+    
+    % Add a boxplot on top of the density plot
+    boxplot(current_data, 'positions', i, 'Widths', 0.5, 'Whisker', 1.5, 'Colors', 'k', 'PlotStyle', 'traditional');
+    
+    % Add individual data points (scatter plot)
+    scatter(ones(size(current_data)) * i, current_data, 15, 'k', 'filled');
+end
+
+% Adjust axis properties
+xlim([0, num_vars + 1]);
+ylim([min(data(:)) - 1, max(data(:)) + 1]);
+set(gca, 'XTick', 1:num_vars, 'XTickLabel', {'r1', 'r2', 'r3'}, 'YTickLabel', []);
+xlabel('Variables');
+title('Raincloud Boxplots');
+hold off;
+end
