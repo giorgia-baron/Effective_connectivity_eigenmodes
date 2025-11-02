@@ -5,4 +5,4 @@ This repository contains example code accompanying the manuscript. The codebase 
 
 Additionally, the repository includes the cortical surface file
 Schaefer_62Parcels_7Networks_order_FSLMNI152_2mm.nii.gz,
-a clustered functional atlas in MNI152 FSL standard space. The corresponding region labels are listed in Table 1-1 of the manuscript.
+a clustered functional atlas in MNI152 FSL standard space. The corresponding region labels are listed in Table 1-1.
